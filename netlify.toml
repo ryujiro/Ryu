@@ -1,5 +1,5 @@
 [build]
-  publish = "pocket-walk"
+  publish = "."
 
 [[headers]]
   for = "/*"
