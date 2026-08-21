@@ -6,37 +6,37 @@
 <meta name="theme-color" content="#0b0d12">
 <title>Pocket Walk MVP</title>
 <style>
-:root{color-scheme:dark;--bg:#0b0d12;--panel:#141824;--panel2:#0f1320;--text:#f6f7fb;--muted:#9aa4b2;--line:#263044;--good:#55d98a;--warn:#f2c14e;--bad:#ff6b6b;--accent:#7aa2ff}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Hiragino Sans","Yu Gothic",sans-serif}body{padding:env(safe-area-inset-top) 16px calc(24px + env(safe-area-inset-bottom))}.wrap{width:min(760px,100%);margin:auto}h1{margin:20px 0 6px;font-size:clamp(28px,8vw,44px);letter-spacing:-.04em}.sub{color:var(--muted);margin:0 0 20px;line-height:1.5}.hero{background:linear-gradient(180deg,#171c29,#111520);border:1px solid var(--line);border-radius:24px;padding:20px;box-shadow:0 16px 48px #0005}.status-line{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.status{font-size:14px;color:var(--muted)}.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--bad);margin-right:7px;vertical-align:-1px}.dot.on{background:var(--good);box-shadow:0 0 0 5px #55d98a1c}.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.big{background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:18px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between}.label{color:var(--muted);font-size:14px}.value{font-size:clamp(42px,12vw,74px);font-weight:750;letter-spacing:-.06em;line-height:1}.unit{font-size:18px;color:var(--muted);font-weight:600}.bar{height:10px;background:#20283a;border-radius:999px;overflow:hidden;margin-top:14px}.bar>i{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--accent),var(--good));border-radius:inherit;transition:width .12s linear}.step-card{margin-top:12px;background:var(--panel2);border:1px solid var(--line);border-radius:20px;padding:16px 18px;display:flex;align-items:center;justify-content:space-between;gap:18px}.step-num{font-size:clamp(44px,13vw,68px);font-weight:800;letter-spacing:-.05em;line-height:1}.step-side{display:flex;align-items:center;gap:14px}.step-side button{min-height:46px;padding:0 14px;font-size:15px}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}.buttons .wide{grid-column:1/-1}button{appearance:none;border:0;border-radius:16px;min-height:56px;padding:0 16px;font-size:17px;font-weight:700;background:#f5f7ff;color:#10131a}button.secondary{background:#20283a;color:#fff;border:1px solid #34405a}button:disabled{opacity:.45}.panel{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:16px}.row{display:grid;grid-template-columns:1fr auto;gap:14px;padding:11px 0;border-bottom:1px solid #ffffff0f}.row:last-child{border:0}.row span:first-child{color:var(--muted)}.tip{margin-top:14px;padding:14px 16px;border-radius:16px;background:#111827;border:1px solid #263452;color:#cdd6e5;line-height:1.55;font-size:14px}.warn{color:var(--warn)}.good{color:var(--good)}.bad{color:var(--bad)}details{margin-top:14px}summary{color:#cbd5e1;cursor:pointer;padding:8px 0}.small{color:var(--muted);font-size:12px;line-height:1.6}@media(max-width:540px){.main-grid,.buttons{grid-template-columns:1fr}.buttons .wide{grid-column:auto}.big{min-height:132px}.step-card{padding:14px 16px}.step-side{gap:10px}}
+:root{color-scheme:dark;--bg:#0b0d12;--panel:#141824;--panel2:#0f1320;--text:#f6f7fb;--muted:#9aa4b2;--line:#263044;--good:#55d98a;--warn:#f2c14e;--bad:#ff6b6b;--accent:#7aa2ff}*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Hiragino Sans","Yu Gothic",sans-serif}body{padding:calc(env(safe-area-inset-top) + 6px) 10px calc(env(safe-area-inset-bottom) + 8px);overflow-x:hidden}.wrap{width:min(760px,100%);margin:auto}.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:7px}.brand{display:flex;align-items:baseline;gap:8px}.brand h1{margin:0;font-size:24px;letter-spacing:-.04em}.brand small{color:var(--muted);font-size:11px}.status-line{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#111520;border:1px solid var(--line);border-radius:12px;padding:7px 10px;margin-bottom:7px}.status{font-size:12px;color:var(--muted);white-space:nowrap}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--bad);margin-right:6px;vertical-align:0}.dot.on{background:var(--good);box-shadow:0 0 0 4px #55d98a1c}.cal-mini{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}.cal-mini strong{font-size:12px}.dashboard{display:grid;grid-template-columns:1.05fr .95fr .9fr;gap:7px}.metric{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:10px;min-height:106px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}.label{color:var(--muted);font-size:11px}.value{font-size:clamp(36px,10vw,54px);font-weight:800;letter-spacing:-.06em;line-height:.95}.steps-value{font-size:clamp(38px,11vw,58px);font-weight:800;letter-spacing:-.05em;line-height:.95}.unit{font-size:13px;color:var(--muted);font-weight:650}.bar{height:6px;background:#20283a;border-radius:999px;overflow:hidden;margin-top:6px}.bar>i{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--accent),var(--good));border-radius:inherit;transition:width .1s linear}.panel{margin-top:7px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:7px}.data-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px 8px}.cell{min-width:0;padding:7px 4px;border-bottom:1px solid #ffffff0d}.cell:nth-last-child(-n+3){border-bottom:0}.cell .k{display:block;color:var(--muted);font-size:10px;line-height:1.15;margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cell strong{font-size:15px;white-space:nowrap}.buttons{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:7px}button{appearance:none;border:0;border-radius:13px;min-height:44px;padding:0 8px;font-size:13px;font-weight:750;background:#f5f7ff;color:#10131a}button.secondary{background:#20283a;color:#fff;border:1px solid #34405a}button:disabled{opacity:.45}.tip{margin-top:7px;padding:8px 10px;border-radius:12px;background:#111827;border:1px solid #263452;color:#cdd6e5;line-height:1.3;font-size:10px;min-height:31px}.warn{color:var(--warn)}.good{color:var(--good)}.bad{color:var(--bad)}details{margin-top:6px}.small{color:var(--muted);font-size:11px;line-height:1.45}summary{font-size:11px;color:#cbd5e1;cursor:pointer}@media(max-width:540px){body{height:100dvh;min-height:100dvh}.wrap{max-width:430px}.brand small,details{display:none}.dashboard{grid-template-columns:1fr 1fr 1fr}.metric{min-height:98px;padding:9px 8px}.value{font-size:clamp(34px,10.5vw,46px)}.steps-value{font-size:clamp(36px,11vw,50px)}.panel{padding:5px 7px}.cell{padding:6px 2px}.cell .k{font-size:9px}.cell strong{font-size:14px}.buttons{gap:6px}button{min-height:42px;font-size:12px}.tip{font-size:9px;padding:6px 8px;min-height:27px}}@media(max-height:700px){.top{margin-bottom:4px}.status-line{margin-bottom:4px;padding:5px 8px}.metric{min-height:88px}.panel,.buttons,.tip{margin-top:4px}.cell{padding:4px 2px}button{min-height:38px}.tip{display:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<h1>Pocket Walk</h1>
-<p class="sub">iPhoneをズボンの前ポケットに入れるだけの、VR歩行センサー試作版。</p>
-<section class="hero">
-<div class="status-line"><div class="status"><span id="dot" class="dot"></span><span id="sensorStatus">未開始</span></div><div id="walkState" class="status">STOP</div></div>
-<div class="main-grid">
-<div class="big"><div class="label">歩行速度</div><div><span id="speed" class="value">0.00</span></div><div class="bar"><i id="speedBar"></i></div></div>
-<div class="big"><div class="label">身体方向</div><div><span id="direction" class="value">0</span><span class="unit">°</span></div><div class="label">正面からの相対角度</div></div>
-</div>
-<div class="step-card"><div><div class="label">歩数</div><div><span id="steps" class="step-num">0</span><span class="unit"> 歩</span></div></div><div class="step-side"><button id="resetStepsBtn" class="secondary">歩数リセット</button></div></div>
+<div class="top"><div class="brand"><h1>Pocket Walk</h1><small>VR歩行センサー</small></div><div id="walkState" class="status">STOP</div></div>
+<div class="status-line"><div class="status"><span id="dot" class="dot"></span><span id="sensorStatus">未開始</span></div><div class="cal-mini">CAL <strong id="calStatus">未実施</strong></div></div>
+
+<section class="dashboard">
+<div class="metric"><div class="label">歩行速度</div><div><span id="speed" class="value">0.00</span></div><div class="bar"><i id="speedBar"></i></div></div>
+<div class="metric"><div class="label">身体方向</div><div><span id="direction" class="value">0</span><span class="unit">°</span></div><div class="label">相対角度</div></div>
+<div class="metric"><div class="label">歩数</div><div><span id="steps" class="steps-value">0</span><span class="unit">歩</span></div><div class="label">検出合計</div></div>
+</section>
+
+<section class="panel"><div class="data-grid">
+<div class="cell"><span class="k">現在周期</span><strong><span id="cadence">0.00</span> Hz</strong></div>
+<div class="cell"><span class="k">基準周期</span><strong><span id="baseCadence">--</span> Hz</strong></div>
+<div class="cell"><span class="k">動的加速度</span><strong><span id="motion">0.00</span></strong></div>
+<div class="cell"><span class="k">検出ピーク</span><strong><span id="peak">0.00</span></strong></div>
+<div class="cell"><span class="k">現在方位</span><strong><span id="heading">--</span>°</strong></div>
+<div class="cell"><span class="k">コンパス精度</span><strong id="accuracy">--</strong></div>
+</div></section>
+
 <div class="buttons">
 <button id="startBtn">センサー開始</button>
-<button id="frontBtn" class="secondary" disabled>今の向きを正面にする</button>
-<button id="calBtn" class="secondary wide" disabled>音声キャリブレーション</button>
+<button id="calBtn" class="secondary" disabled>音声キャリブレーション</button>
+<button id="frontBtn" class="secondary" disabled>正面を設定</button>
+<button id="resetStepsBtn" class="secondary">歩数リセット</button>
 </div>
-</section>
-<section class="panel">
-<div class="row"><span>キャリブレーション</span><strong id="calStatus">未実施</strong></div>
-<div class="row"><span>現在方位</span><strong><span id="heading">--</span>°</strong></div>
-<div class="row"><span>現在の足踏み周期</span><strong><span id="cadence">0.00</span> Hz</strong></div>
-<div class="row"><span>基準周期（キャリブレーション）</span><strong><span id="baseCadence">--</span> Hz</strong></div>
-<div class="row"><span>動的加速度</span><strong><span id="motion">0.00</span> m/s²</strong></div>
-<div class="row"><span>検出ピーク</span><strong><span id="peak">0.00</span> m/s²</strong></div>
-<div class="row"><span>コンパス精度</span><strong id="accuracy">--</strong></div>
-</section>
-<div id="message" class="tip">① センサー開始 → ② 音声キャリブレーション → ③ 指示に従ってポケットへ。画面を見なくても音声で進みます。</div>
-<details><summary>キャリブレーションについて</summary><div class="small">立った状態を3秒、普通の速さの足踏みを8秒測定します。静止ノイズ、歩行の揺れ、普通歩きの周期を自動保存します。速度は2歩で素早く仮判定し、3歩で補正して安定させます。普通歩きを約0.50の基準にし、テンポと揺れが強くなるほど1.00まで上がります。</div></details>
+<div id="message" class="tip">センサー開始 → 音声キャリブレーション → ポケットへ。画面を見なくても音声で進みます。</div>
+<details><summary>キャリブレーションについて</summary><div class="small">立った状態を3秒、普通の速さの足踏みを8秒測定します。速度は2歩で素早く仮判定し、3歩で補正して安定させます。</div></details>
 </div>
 <script>
 (()=>{
@@ -47,7 +47,6 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const percentile=(arr,p)=>{if(!arr.length)return 0;const a=[...arr].sort((x,y)=>x-y);const i=Math.min(a.length-1,Math.max(0,Math.floor((a.length-1)*p)));return a[i]};
 const avg=arr=>arr.length?arr.reduce((a,b)=>a+b,0)/arr.length:0;
 const s={heading:null,headingAccuracy:null,zeroHeading:null,gravityMag:9.81,dyn:0,peak:0,lastStepMs:0,lastIntervals:[],lastPeaks:[],cadenceHz:0,targetSpeed:0,speed:0,stepCount:0,armed:true,started:false,calibrating:false,calPhase:null,calSamples:[],thresholdHigh:1.35,thresholdLow:.55,normalCadenceHz:1.0,walkPeakRef:2.5,calibrated:false};
-
 function msg(t,k=""){$("message").className="tip "+k;$("message").textContent=t}
 function speak(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang="ja-JP";u.rate=.95;u.pitch=1;const voices=speechSynthesis.getVoices();const ja=voices.find(v=>v.lang&&v.lang.toLowerCase().startsWith("ja"));if(ja)u.voice=ja;speechSynthesis.speak(u)}catch(_){}}
 function showBaseCadence(){$("baseCadence").textContent=s.calibrated?s.normalCadenceHz.toFixed(2):"--"}
