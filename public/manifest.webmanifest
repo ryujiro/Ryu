@@ -1,0 +1,13 @@
+{
+  "name": "ゲーム時間追加",
+  "short_name": "時間追加",
+  "description": "保護者用のゲーム時間追加アプリ",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f5f1e8",
+  "theme_color": "#f5f1e8",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
