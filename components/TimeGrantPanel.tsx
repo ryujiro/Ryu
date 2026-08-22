@@ -26,12 +26,22 @@ export function TimeGrantPanel() {
   }, []);
   useEffect(() => {
     if (!current || current.status === "acknowledged" || current.status === "failed") return;
-    const timer = window.setInterval(() => setCurrent((previous) => {
-      if (!previous) return previous;
-      const next = previewProgress(previous); saveGrant(next); return next;
-    }), 900);
+    const timer = window.setInterval(() => {
+      if (device?.preview === false) {
+        const query = new URLSearchParams({ sendId: current.sendId, requestId: current.requestId, minutes: String(current.minutes), createdAt: current.createdAt });
+        fetch(`/api/manual-time/${current.id}?${query}`, { cache: "no-store" })
+          .then((response) => response.ok ? response.json() : null)
+          .then((data) => { if (data?.grant) { saveGrant(data.grant); setCurrent(data.grant); } })
+          .catch(() => undefined);
+        return;
+      }
+      setCurrent((previous) => {
+        if (!previous) return previous;
+        const next = previewProgress(previous); saveGrant(next); return next;
+      });
+    }, device?.preview === false ? 2500 : 900);
     return () => window.clearInterval(timer);
-  }, [current]);
+  }, [current, device?.preview]);
   useEffect(() => { if (confirming) backRef.current?.focus(); }, [confirming]);
 
   function requestConfirmation(event: FormEvent) { event.preventDefault(); if (minutes !== null) setConfirming(true); }

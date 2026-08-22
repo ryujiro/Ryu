@@ -11,7 +11,7 @@ export function HistoryPanel() {
   useEffect(() => { const updated = loadHistory().map(previewProgress); updated.forEach(saveGrant); setItems(updated); }, []);
   async function retry(item: TimeGrant) {
     if (item.status !== "failed") return;
-    const response = await fetch(`/api/manual-time/${item.id}/retry`, { method: "POST" });
+    const response = await fetch(`/api/manual-time/${item.id}/retry`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ requestId: item.requestId, sendId: item.sendId, minutes: item.minutes }) });
     const now = new Date().toISOString();
     const grant = response.ok
       ? (await response.json()).grant as TimeGrant
