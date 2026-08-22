@@ -1,0 +1,27 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[context.branch-deploy.environment]
+  APP_ENV = "preview"
+  CURRENT_QUEUE_REAL_SEND = "false"
+
+[context.deploy-preview.environment]
+  APP_ENV = "preview"
+  CURRENT_QUEUE_REAL_SEND = "false"
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-store"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "same-origin"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
