@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPreviewGrant } from "@/lib/preview-store";
-import { isAuthenticated } from "@/lib/security";
 import { getCurrentQueueStatus } from "@/lib/current-queue";
 import type { TimeGrant } from "@/lib/types";
 
 export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
-  if (!isAuthenticated(request)) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   const { id } = await context.params;
   if (process.env.APP_ENV === "production") {
     const sendId = request.nextUrl.searchParams.get("sendId");

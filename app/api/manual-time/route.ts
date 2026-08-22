@@ -1,12 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createPreviewGrant } from "@/lib/preview-store";
-import { allowRate, isAuthenticated, requestIsSameOrigin } from "@/lib/security";
+import { allowRate, requestIsSameOrigin } from "@/lib/security";
 import { manualTimeInputSchema } from "@/lib/validation";
 import { enqueueCurrentQueue, getCurrentQueueStatus, stableQueueUuid } from "@/lib/current-queue";
 import type { TimeGrant } from "@/lib/types";
 
 export async function POST(request: NextRequest) {
-  if (!isAuthenticated(request)) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   if (!requestIsSameOrigin(request)) return NextResponse.json({ error: "invalid origin" }, { status: 403 });
   const ip = request.headers.get("x-nf-client-connection-ip") ?? request.headers.get("x-forwarded-for") ?? "unknown";
   if (!allowRate(`grant:${ip}`, 6)) return NextResponse.json({ error: "しばらく待ってからお試しください" }, { status: 429 });
@@ -39,7 +38,6 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ grant: createPreviewGrant(parsed.data.requestId, parsed.data.minutes) }, { status: 201, headers: { "cache-control": "no-store" } });
 }
 
-export async function GET(request: NextRequest) {
-  if (!isAuthenticated(request)) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+export async function GET() {
   return NextResponse.json({ grants: [], preview: true }, { headers: { "cache-control": "no-store" } });
 }

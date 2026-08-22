@@ -2,6 +2,12 @@
 
 保護者がM5Stackのゲーム時間を追加するNext.jsアプリです。
 
+## アクセス
+
+- パスコードやログイン操作はありません。
+- アプリを開くと、すぐにゲーム時間追加画面を表示します。
+- 送信時の確認画面、同一オリジン確認、回数制限は維持します。
+
 ## 安全なPreview
 
 - Branch Deployは`APP_ENV=preview`かつ`CURRENT_QUEUE_REAL_SEND=false`で動作します。

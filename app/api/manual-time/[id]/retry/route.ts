@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { retryPreviewGrant } from "@/lib/preview-store";
-import { isAuthenticated, requestIsSameOrigin } from "@/lib/security";
+import { requestIsSameOrigin } from "@/lib/security";
 import { enqueueCurrentQueue } from "@/lib/current-queue";
 import { z } from "zod";
 
 const retrySchema = z.object({ requestId: z.uuid(), sendId: z.uuid(), minutes: z.number().int().min(1).max(1440) });
 
 export async function POST(request: NextRequest, context: { params: Promise<{ id: string }> }) {
-  if (!isAuthenticated(request)) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   if (!requestIsSameOrigin(request)) return NextResponse.json({ error: "invalid origin" }, { status: 403 });
   const { id } = await context.params;
   if (process.env.APP_ENV === "production") {
