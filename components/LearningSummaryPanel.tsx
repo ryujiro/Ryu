@@ -23,38 +23,42 @@ function SummaryItem({ label, value, total = false }: { label: string; value: Le
   </div>;
 }
 
-type TrendChartProps = {
-  title: string;
-  data: LearningDay[];
-  getValue: (day: LearningDay) => number;
-  formatValue: (value: number) => string;
-  total: string;
-  tone: "green" | "blue";
-};
-
-function TrendChart({ title, data, getValue, formatValue, total, tone }: TrendChartProps) {
-  const values = data.map(getValue);
-  const max = Math.max(...values, 1);
-  const left = 36;
-  const right = 548;
-  const top = 18;
-  const bottom = 164;
-  const points = values.map((value, index) => ({
+function CombinedTrendChart({ data, totals }: { data: LearningDay[]; totals: LearningTotals }) {
+  const problemValues = data.map((day) => day.problems);
+  const minuteValues = data.map((day) => day.seconds / 60);
+  const problemMax = Math.max(...problemValues, 1);
+  const minuteMax = Math.max(...minuteValues, 1);
+  const left = 58;
+  const right = 662;
+  const top = 26;
+  const bottom = 226;
+  const makePoints = (values: number[], max: number) => values.map((value, index) => ({
     x: left + (index / Math.max(values.length - 1, 1)) * (right - left),
     y: bottom - (value / max) * (bottom - top),
     value,
   }));
-  const path = points.map((point, index) => `${index ? "L" : "M"}${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
+  const problemPoints = makePoints(problemValues, problemMax);
+  const minutePoints = makePoints(minuteValues, minuteMax);
+  const makePath = (points: typeof problemPoints) => points.map((point, index) => `${index ? "L" : "M"}${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
 
   return <section className="trendChart">
-    <div className="trendHeading"><h4>{title}</h4><span>{total}</span></div>
-    <svg className={`trendSvg trend${tone}`} viewBox="0 0 560 205" role="img" aria-label={`${title}の直近14日間の推移`}>
-      {[top, (top + bottom) / 2, bottom].map((y) => <line key={y} className="chartGridLine" x1={left} x2={right} y1={y} y2={y} />)}
-      <text className="chartAxisText" x="2" y={top + 4}>{formatValue(max)}</text>
-      <text className="chartAxisText" x="20" y={bottom + 4}>0</text>
-      <path className="chartLine" d={path} />
-      {points.map((point, index) => <circle key={data[index].date} className="chartPoint" cx={point.x} cy={point.y} r="4"><title>{shortDate(data[index].date)}：{formatValue(point.value)}</title></circle>)}
-      {data.map((day, index) => index % 3 === 0 || index === data.length - 1 ? <text key={day.date} className="chartDate" x={points[index].x} y="194" textAnchor="middle">{shortDate(day.date)}</text> : null)}
+    <div className="trendLegend" aria-label="グラフの凡例">
+      <span className="legendItem legendProblems"><i aria-hidden="true" />問題数 <b>合計{totals.problems}問</b></span>
+      <span className="legendItem legendMinutes"><i aria-hidden="true" />学習時間 <b>合計{formatDuration(totals.seconds)}</b></span>
+    </div>
+    <svg className="trendSvg" viewBox="0 0 720 276" role="img" aria-label="問題数と学習時間の直近14日間の推移">
+      {[top, top + (bottom - top) / 2, bottom].map((y) => <line key={y} className="chartGridLine" x1={left} x2={right} y1={y} y2={y} />)}
+      <text className="chartAxisTitle chartProblemsText" x={left} y="14">問題数</text>
+      <text className="chartAxisTitle chartMinutesText" x={right} y="14" textAnchor="end">学習時間</text>
+      <text className="chartAxisText chartProblemsText" x="4" y={top + 4}>{Math.round(problemMax)}問</text>
+      <text className="chartAxisText chartMinutesText" x="716" y={top + 4} textAnchor="end">{Math.round(minuteMax)}分</text>
+      <text className="chartAxisText" x="37" y={bottom + 4}>0</text>
+      <text className="chartAxisText" x="678" y={bottom + 4}>0</text>
+      <path className="chartLine chartProblemsLine" d={makePath(problemPoints)} />
+      <path className="chartLine chartMinutesLine" d={makePath(minutePoints)} />
+      {problemPoints.map((point, index) => <circle key={`problems-${data[index].date}`} className="chartPoint chartProblemsPoint" cx={point.x} cy={point.y} r="4"><title>{shortDate(data[index].date)}：{Math.round(point.value)}問</title></circle>)}
+      {minutePoints.map((point, index) => <circle key={`minutes-${data[index].date}`} className="chartPoint chartMinutesPoint" cx={point.x} cy={point.y} r="4"><title>{shortDate(data[index].date)}：{formatDuration(data[index].seconds)}</title></circle>)}
+      {data.map((day, index) => index % 2 === 0 || index === data.length - 1 ? <text key={day.date} className="chartDate" x={problemPoints[index].x} y="260" textAnchor="middle">{shortDate(day.date)}</text> : null)}
     </svg>
   </section>;
 }
@@ -95,10 +99,7 @@ export function LearningSummaryPanel() {
       </div>
       <div className="trendSection">
         <h3>直近2週間</h3>
-        <div className="trendGrid">
-          <TrendChart title="問題数" data={dashboard.history} getValue={(day) => day.problems} formatValue={(value) => `${Math.round(value)}問`} total={`14日合計 ${totals.problems}問`} tone="green" />
-          <TrendChart title="学習時間" data={dashboard.history} getValue={(day) => day.seconds / 60} formatValue={(value) => `${Math.round(value)}分`} total={`14日合計 ${formatDuration(totals.seconds)}`} tone="blue" />
-        </div>
+        <CombinedTrendChart data={dashboard.history} totals={totals} />
       </div>
     </> : null}
   </section>;
