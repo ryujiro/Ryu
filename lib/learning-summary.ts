@@ -3,11 +3,18 @@ export type LearningTotals = {
   seconds: number;
 };
 
-export type LearningSummary = {
+export type LearningDay = LearningTotals & {
   date: string;
-  general: LearningTotals;
-  kanji: LearningTotals;
-  total: LearningTotals;
+};
+
+export type LearningDashboard = {
+  date: string;
+  today: {
+    general: LearningTotals;
+    kanji: LearningTotals;
+    total: LearningTotals;
+  };
+  history: LearningDay[];
 };
 
 type GvizCell = { v?: unknown; f?: string | null } | null;
@@ -60,23 +67,26 @@ function durationSeconds(cell: GvizCell): number {
   return 0;
 }
 
-export function parseGvizTable(text: string, targetDate: string): LearningTotals {
+export function parseGvizDailyTotals(text: string): Record<string, LearningTotals> {
   const start = text.indexOf("{");
   const end = text.lastIndexOf("}");
   if (start < 0 || end <= start) throw new Error("Google Sheetsの応答を読み取れませんでした");
   const response = JSON.parse(text.slice(start, end + 1)) as GvizResponse;
-  const totals = { problems: 0, seconds: 0 };
+  const daily: Record<string, LearningTotals> = {};
 
   for (const row of response.table?.rows ?? []) {
     const cells = row.c ?? [];
-    if (dateKey(cells[0] ?? null) !== targetDate) continue;
+    const date = dateKey(cells[0] ?? null);
+    if (!date) continue;
+    const totals = daily[date] ?? { problems: 0, seconds: 0 };
     totals.problems += Math.max(0, Math.round(numeric(cells[1] ?? null)));
     totals.seconds += durationSeconds(cells[2] ?? null);
+    daily[date] = totals;
   }
-  return totals;
+  return daily;
 }
 
-export async function fetchSheetTotals(spreadsheetId: string, targetDate: string): Promise<LearningTotals> {
+export async function fetchSheetDailyTotals(spreadsheetId: string): Promise<Record<string, LearningTotals>> {
   const params = new URLSearchParams({
     tqx: "out:json",
     sheet: "学習履歴",
@@ -86,9 +96,24 @@ export async function fetchSheetTotals(spreadsheetId: string, targetDate: string
   const url = `https://docs.google.com/spreadsheets/d/${encodeURIComponent(spreadsheetId)}/gviz/tq?${params}`;
   const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(10_000) });
   if (!response.ok) throw new Error(`Google Sheetsから取得できませんでした (${response.status})`);
-  return parseGvizTable(await response.text(), targetDate);
+  return parseGvizDailyTotals(await response.text());
 }
 
 export function combineLearningTotals(general: LearningTotals, kanji: LearningTotals): LearningTotals {
   return { problems: general.problems + kanji.problems, seconds: general.seconds + kanji.seconds };
+}
+
+export function buildLearningHistory(
+  general: Record<string, LearningTotals>,
+  kanji: Record<string, LearningTotals>,
+  endDate: string,
+  days = 14,
+): LearningDay[] {
+  const end = new Date(`${endDate}T00:00:00Z`);
+  return Array.from({ length: days }, (_, index) => {
+    const date = new Date(end);
+    date.setUTCDate(end.getUTCDate() - (days - index - 1));
+    const key = date.toISOString().slice(0, 10);
+    return { date: key, ...combineLearningTotals(general[key] ?? { problems: 0, seconds: 0 }, kanji[key] ?? { problems: 0, seconds: 0 }) };
+  });
 }
