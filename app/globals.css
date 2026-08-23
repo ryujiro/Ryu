@@ -39,16 +39,21 @@ a { color: inherit; }
 .learningError button { min-height: 42px; border: 1px solid var(--red); border-radius: 9px; padding: 0 14px; color: var(--red); background: white; font-weight: 800; cursor: pointer; }
 .trendSection { margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--line); }
 .trendSection h3 { margin: 0 0 16px; color: var(--forest); font-size: 22px; }
-.trendGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.trendChart { min-width: 0; padding: 17px 16px 10px; border: 1px solid var(--line); border-radius: 13px; background: white; }
-.trendHeading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-.trendHeading h4 { margin: 0; color: var(--forest); font-size: 17px; }
-.trendHeading span { color: var(--muted); font-size: 12px; font-weight: 800; text-align: right; }
+.trendChart { min-width: 0; padding: 18px 20px 12px; border: 1px solid var(--line); border-radius: 13px; background: white; }
+.trendLegend { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 12px 24px; }
+.legendItem { display: inline-flex; align-items: center; gap: 7px; color: var(--ink); font-size: 14px; font-weight: 800; }
+.legendItem i { width: 28px; height: 4px; border-radius: 999px; background: var(--teal); }
+.legendItem b { color: var(--muted); font-size: 12px; }
+.legendMinutes i { background: var(--blue); }
 .trendSvg { display: block; width: 100%; height: auto; margin-top: 8px; overflow: visible; }
 .chartGridLine { stroke: #dce4df; stroke-width: 1; }
-.chartLine { fill: none; stroke: var(--teal); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
-.chartPoint { fill: white; stroke: var(--teal); stroke-width: 3; }
-.trendblue .chartLine, .trendblue .chartPoint { stroke: var(--blue); }
+.chartLine { fill: none; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.chartPoint { fill: white; stroke-width: 3; }
+.chartProblemsLine, .chartProblemsPoint { stroke: var(--teal); }
+.chartMinutesLine, .chartMinutesPoint { stroke: var(--blue); }
+.chartAxisTitle { font-family: inherit; font-size: 13px; font-weight: 900; }
+.chartProblemsText { fill: var(--teal); }
+.chartMinutesText { fill: var(--blue); }
 .chartAxisText, .chartDate { fill: var(--muted); font-size: 12px; font-family: inherit; }
 .pageTitle { margin: 0; color: var(--forest); font-size: clamp(34px, 5vw, 54px); line-height: 1.15; letter-spacing: -.035em; text-align: center; }
 .subtitle { margin: 16px 0 30px; color: var(--ink); font-size: clamp(16px, 2vw, 20px); line-height: 1.75; text-align: center; }
@@ -114,7 +119,8 @@ a { color: inherit; }
   .learningLabel { margin: 0; } .learningValues { grid-template-columns: 1fr auto; align-items: baseline; gap: 12px; }
   .learningValues strong { font-size: 27px; } .learningValues span { font-size: 14px; text-align: right; }
   .learningError { align-items: stretch; flex-direction: column; }
-  .trendSection { margin-top: 22px; padding-top: 20px; } .trendGrid { grid-template-columns: 1fr; gap: 12px; }
+  .trendSection { margin-top: 22px; padding-top: 20px; } .trendChart { padding: 14px 10px 8px; }
+  .trendLegend { justify-content: flex-start; gap: 8px 16px; } .legendItem { font-size: 12px; } .legendItem i { width: 20px; } .legendItem b { display: none; }
   .pageTitle { font-size: 32px; } .subtitle { margin: 12px 0 24px; font-size: 15px; }
   .presets { grid-template-columns: repeat(2, 1fr); gap: 10px; } .preset { min-height: 56px; font-size: 21px; }
   .minuteField { grid-template-columns: 1fr 72px; margin-top: 16px; } .minuteInput { height: 86px; font-size: 54px; } .unit { font-size: 22px; }
