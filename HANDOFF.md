@@ -9,20 +9,21 @@
 
 ## 現在の動作状態
 
-- 実装・ローカル検証は完了。Google Driveコネクタで2026-08-29分の画像12枚を確認済み。
-- 新APIはGoogle Drive APIキーがない場合に502を返し、画面は画像カードだけ`--枚`になる設計。
-- Netlifyには`GOOGLE_DRIVE_API_KEY`がまだ設定されていないため、本番APIの実データ取得と本番4カード表示は未確認。
+- 実装をGitHub `main`へfast-forwardで反映し、既存Netlifyサイト`game-time-add`へ本番デプロイ済み。
+- Netlify環境変数`GOOGLE_DRIVE_API_KEY`を登録済み。値はGitHub・クライアント・HANDOFFへ保存していない。
+- 本番`GET /api/today-image-count`は`{"count":12,"dateKey":"20260829"}`を返すことを確認。
+- 本番トップ画面（横幅1363px）で4カード横並びと「今日の画像 12枚」を確認。
+- Google Drive APIキーがない場合やDrive API取得失敗時は、新APIがエラーを返し、画面は画像カードだけ`--枚`になって既存機能を継続する設計。
 
 ## 未解決事項
 
-- Google Drive APIを有効化したAPIキーをNetlify環境変数`GOOGLE_DRIVE_API_KEY`へ登録する必要がある。
-- Google Cloud ConsoleをCloud Browserで開こうとしたが、ページ遷移とタブ取得がタイムアウトし、APIキー作成画面へ到達できなかった。APIキーの作成操作は未実施。
+- 実機スマートフォンの狭幅表示は未確認。CSSでは760px以下で2列、640px以下で1列へ折り返す。
+- M5Stackへの実送信は今回行っていない（不要なゲーム時間追加を避けるため）。送信処理自体は変更していない。
 
 ## 次にやること
 
-1. Google Drive APIキーをNetlifyへ安全に登録。
-2. 既存GitHub mainへ反映し、既存Netlifyサイトへ本番デプロイ。
-3. 本番APIが`count: 12`を返すことと、トップ画面の4カード表示を確認。
+1. 必要に応じて実機スマートフォンでカードの折り返し表示を目視確認。
+2. 画像提出後、30〜60秒以内に枚数へ反映されることを運用中に確認。
 
 ## 実施したテストやビルド結果
 
@@ -30,6 +31,7 @@
 - `npm run test`: 成功（5ファイル、23テスト）。
 - `npm run typecheck`: 成功。
 - `npm run build`: 成功。`/api/today-image-count`が動的Route Handlerとして生成されることを確認。
-- 実Google Drive API: APIキー未設定のため未確認。
-- 本番ブラウザ確認: 未デプロイのため未確認。
-- Google Cloud Console: Cloud Browser接続タイムアウトのため未設定。
+- 実Google Drive API: 本番で成功。2026-08-29（Asia/Tokyo）の画像12枚を取得。
+- 本番ブラウザ確認: トップの4カード、12枚表示、5分選択、履歴画面、設定画面を確認。5分選択後は入力値`5`、送信ボタン有効。実送信は未実施。
+- 本番ブラウザのコンソール: アプリ由来のエラーなし。Cloud Browser拡張機能のメタデータ送信エラーのみ記録。
+- Netlify本番デプロイ: 成功（Deploy ID `6a92af0ab551c900a993a9cc`）。
