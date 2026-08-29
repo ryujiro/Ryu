@@ -23,6 +23,13 @@ function SummaryItem({ label, value, total = false }: { label: string; value: Le
   </div>;
 }
 
+function ImageCountItem({ count }: { count: number | null }) {
+  return <div className="learningItem">
+    <div className="learningLabel">今日の画像</div>
+    <div className="learningValues"><strong>{count === null ? "--枚" : `${count.toLocaleString("ja-JP")}枚`}</strong></div>
+  </div>;
+}
+
 function CombinedTrendChart({ data, totals }: { data: LearningDay[]; totals: LearningTotals }) {
   const problemValues = data.map((day) => day.problems);
   const minuteValues = data.map((day) => day.seconds / 60);
@@ -67,6 +74,7 @@ export function LearningSummaryPanel() {
   const [dashboard, setDashboard] = useState<LearningDashboard | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [imageCount, setImageCount] = useState<number | null>(null);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -85,6 +93,17 @@ export function LearningSummaryPanel() {
   }, []);
 
   useEffect(() => { void load(); }, [load]);
+  useEffect(() => {
+    let active = true;
+    fetch("/api/today-image-count", { cache: "no-store" })
+      .then(async (response) => {
+        const data = await response.json();
+        if (!response.ok || typeof data.count !== "number") throw new Error("画像枚数を取得できませんでした");
+        if (active) setImageCount(data.count);
+      })
+      .catch(() => { if (active) setImageCount(null); });
+    return () => { active = false; };
+  }, []);
   const totals = useMemo(() => dashboard?.history.reduce((sum, day) => ({ problems: sum.problems + day.problems, seconds: sum.seconds + day.seconds }), { problems: 0, seconds: 0 }) ?? { problems: 0, seconds: 0 }, [dashboard]);
 
   return <section className="learningCard" aria-labelledby="learning-title">
@@ -96,6 +115,7 @@ export function LearningSummaryPanel() {
         <SummaryItem label="通常学習" value={dashboard.today.general} />
         <SummaryItem label="漢字学習" value={dashboard.today.kanji} />
         <SummaryItem label="合計" value={dashboard.today.total} total />
+        <ImageCountItem count={imageCount} />
       </div>
       <div className="trendSection">
         <h3>直近2週間</h3>
