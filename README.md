@@ -19,6 +19,17 @@
 
 Production用ゲートウェイは既存`/api/transfers`へ`id`、`sendId`、`manual:<requestId>`形式の`sessionId`、`seconds`を送ります。M5Stackのclaim/ACK、端末認証、Wi-Fi、ファームウェアは変更しません。
 
+## 今日の画像
+
+トップ画面は、Google Driveの指定フォルダ直下にある当日分の画像枚数を表示します。
+
+- 日付は`Asia/Tokyo`で判定します。
+- ファイル名に`_YYYYMMDD_`を含み、MIME typeが`image/*`のファイルだけを数えます。
+- ブラウザからDriveへ直接アクセスせず、`/api/today-image-count`がサーバー側でGoogle Drive APIを呼び出します。
+- `GOOGLE_DRIVE_API_KEY`はNetlifyのサーバー環境変数に設定し、クライアントへ公開しません。
+- `GOOGLE_DRIVE_IMAGE_FOLDER_ID`は対象フォルダIDです。未設定時は現在の提出フォルダを使用します。
+- 取得に失敗した場合は画像カードだけ`--枚`になり、既存機能は継続します。
+
 ## コマンド
 
 ```bash
