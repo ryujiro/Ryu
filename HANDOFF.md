@@ -16,6 +16,7 @@
 ## 未解決事項
 
 - Google Drive APIを有効化したAPIキーをNetlify環境変数`GOOGLE_DRIVE_API_KEY`へ登録する必要がある。
+- Google Cloud ConsoleをCloud Browserで開こうとしたが、ページ遷移とタブ取得がタイムアウトし、APIキー作成画面へ到達できなかった。APIキーの作成操作は未実施。
 
 ## 次にやること
 
@@ -31,3 +32,4 @@
 - `npm run build`: 成功。`/api/today-image-count`が動的Route Handlerとして生成されることを確認。
 - 実Google Drive API: APIキー未設定のため未確認。
 - 本番ブラウザ確認: 未デプロイのため未確認。
+- Google Cloud Console: Cloud Browser接続タイムアウトのため未設定。
