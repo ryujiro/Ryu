@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import type { KanjiAppSettings } from "@/lib/kanji-admin-settings";
+import { KanjiOnlySettingsCard } from "@/components/KanjiOnlySettingsCard";
 
 const SUBJECT_ORDER = ["国語", "数学", "英語", "理科", "社会"];
 
@@ -76,6 +77,7 @@ export function AdminCenter() {
       <p>各アプリの設定を、ここにまとめていきます。</p>
     </div>
 
+    <div className="adminAppList">
     <section className="adminAppCard" aria-labelledby="kanji-admin-title">
       <div className="adminAppHeading">
         <div><p className="adminAppKicker">学習アプリ</p><h2 id="kanji-admin-title">覚える君</h2></div>
@@ -113,5 +115,7 @@ export function AdminCenter() {
         <button className="primary adminSave" type="button" disabled={saving || !hasActiveSubject} onClick={() => void save()}>{saving ? "保存中…" : "設定を保存"}</button>
       </div> : null}
     </section>
+    <KanjiOnlySettingsCard />
+    </div>
   </section>;
 }

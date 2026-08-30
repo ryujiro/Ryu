@@ -35,8 +35,11 @@ Production用ゲートウェイは既存`/api/transfers`へ`id`、`sendId`、`ma
 - ヘッダーの「管理」から`/admin`を開きます。
 - パスコード入力画面はありません。
 - 現在は覚える君の「1日の問題数」「英語の音声・音読」「教科の出題割合」だけを管理します。
+- 漢字覚える君は、Googleシート「学習記録、漢字のみ」の`管理!B2`にある「1日の問題数」だけを管理します。
 - 読み取りと保存は`/api/admin/kanji-settings`がサーバー側から覚える君の共通設定APIへ中継します。
+- 漢字覚える君の読み取りと保存は`/api/admin/kanji-only-settings`が行い、保存先を`管理!B2`へ固定します。
 - 保存に必要な`KANJI_ADMIN_PASSCODE`はNetlifyのサーバー環境変数だけに置き、ブラウザへ返しません。
+- Googleシートへの保存に必要なサービスアカウントJSONは`GOOGLE_SHEETS_SERVICE_ACCOUNT_JSON`としてNetlifyのサーバー環境変数だけに置きます。
 - Previewでは保存を模擬し、覚える君の本番設定を書き換えません。
 
 ## コマンド
