@@ -2,36 +2,43 @@
 
 ## 今回の変更内容
 
-- トップ画面の学習カードを4列にし、「今日の画像」カードを追加。
-- `GET /api/today-image-count`を追加。
-- Google Drive APIをサーバー側から呼び、Asia/Tokyoの当日を`YYYYMMDD`にして、ファイル名に`_YYYYMMDD_`を含む`image/*`だけを集計。
-- Drive API失敗時は画像カードだけ`--枚`にし、既存画面とゲーム時間機能を止めない。
+- ヘッダー右側へ「管理」を追加し、`/admin`の管理センターへ移動できるようにした。
+- 管理センターに「覚える君」の最低限設定を追加。
+  - 1日の問題数
+  - 英語の音声・音読 ON/OFF
+  - 教科の出題割合
+- 統計、問題一覧、レベル集計、スプレッドシート接続設定、パスコード入力画面は追加していない。
+- `GET/POST /api/admin/kanji-settings`を追加。覚える君の共通設定APIをサーバー側から読み書きする。
+- 保存に必要な管理パスコードは`KANJI_ADMIN_PASSCODE`から読み、クライアントへ返さない。
+- PreviewのPOSTは模擬保存にして、覚える君の本番設定を変更しない。
 
 ## 現在の動作状態
 
-- 実装をGitHub `main`へfast-forwardで反映し、既存Netlifyサイト`game-time-add`へ本番デプロイ済み。
-- Netlify環境変数`GOOGLE_DRIVE_API_KEY`を登録済み。値はGitHub・クライアント・HANDOFFへ保存していない。
-- 本番`GET /api/today-image-count`は`{"count":12,"dateKey":"20260829"}`を返すことを確認。
-- 本番トップ画面（横幅1363px）で4カード横並びと「今日の画像 12枚」を確認。
-- Google Drive APIキーがない場合やDrive API取得失敗時は、新APIがエラーを返し、画面は画像カードだけ`--枚`になって既存機能を継続する設計。
+- 実装、lint、自動テスト、型チェック、buildは完了。
+- 覚える君の公開設定APIから、現在値（100問、音声ON、国語0・社会1・英語1・数学1・理科0）を読み取れることを確認済み。
+- Netlifyの既存サイト`game-time-add`には`KANJI_ADMIN_PASSCODE`が未登録のため、本番保存と本番公開はまだ行っていない。
+- ローカル画面をCloud Browserで開こうとしたが、`localhost`が`ERR_BLOCKED_BY_CLIENT`で遮断されたため、ブラウザUI確認は未実施。
 
 ## 未解決事項
 
-- 実機スマートフォンの狭幅表示は未確認。CSSでは760px以下で2列、640px以下で1列へ折り返す。
-- M5Stackへの実送信は今回行っていない（不要なゲーム時間追加を避けるため）。送信処理自体は変更していない。
+- 元の覚える君で使っている管理パスコードを、Netlify環境変数`KANJI_ADMIN_PASSCODE`へ登録する必要がある。チャット、GitHub、クライアントコードには貼らない。
+- 環境変数登録後、専用ブランチを`main`へ反映し、既存Netlifyサイトへ本番デプロイする。
+- 本番の管理画面表示と実保存をブラウザで確認する必要がある。
 
 ## 次にやること
 
-1. 必要に応じて実機スマートフォンでカードの折り返し表示を目視確認。
-2. 画像提出後、30〜60秒以内に枚数へ反映されることを運用中に確認。
+1. ユーザーがNetlifyの`game-time-add`へ`KANJI_ADMIN_PASSCODE`を登録する。
+2. 専用ブランチを`main`へfast-forwardで反映する。
+3. 既存Netlifyサイトへ本番デプロイする。
+4. 本番で「管理」遷移、現在値表示、保存、再読み込み後の反映を確認する。
 
 ## 実施したテストやビルド結果
 
-- `npm run lint`: 成功。既存コード3か所に抵触した`react-hooks/set-state-in-effect`のみ無効化し、既存動作の変更を回避。
-- `npm run test`: 成功（5ファイル、23テスト）。
+- `npm run lint`: 成功。
+- `npm run test`: 成功（6ファイル、28テスト）。
 - `npm run typecheck`: 成功。
-- `npm run build`: 成功。`/api/today-image-count`が動的Route Handlerとして生成されることを確認。
-- 実Google Drive API: 本番で成功。2026-08-29（Asia/Tokyo）の画像12枚を取得。
-- 本番ブラウザ確認: トップの4カード、12枚表示、5分選択、履歴画面、設定画面を確認。5分選択後は入力値`5`、送信ボタン有効。実送信は未実施。
-- 本番ブラウザのコンソール: アプリ由来のエラーなし。Cloud Browser拡張機能のメタデータ送信エラーのみ記録。
-- Netlify本番デプロイ: 成功（Deploy ID `6a92af0ab551c900a993a9cc`）。
+- `npm run build`: 成功。`/admin`と`/api/admin/kanji-settings`の生成を確認。
+- 覚える君の実API GET: 成功。現在の共通設定を取得。
+- 覚える君の実API POST: 未実施（管理パスコード未登録のため）。
+- ローカルブラウザUI: 未確認（Cloud Browserがlocalhostを遮断）。
+- 本番デプロイ: 未実施。

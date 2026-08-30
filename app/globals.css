@@ -108,6 +108,38 @@ a { color: inherit; }
 .settingRow { display: grid; grid-template-columns: 160px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 .settingRow dt { color: var(--muted); font-weight: 700; }
 .settingRow dd { margin: 0; font-weight: 800; }
+.adminCenter { width: min(100%, 790px); margin: 0 auto; }
+.adminIntro { margin-bottom: 24px; }
+.adminIntro .sectionTitle { margin-bottom: 9px; }
+.adminIntro > p:last-child { margin: 0; color: var(--muted); }
+.adminAppCard { padding: clamp(24px, 4vw, 36px); border: 1px solid rgb(22 75 60 / 8%); border-radius: 22px; background: var(--surface); box-shadow: var(--shadow); }
+.adminAppHeading { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 26px; }
+.adminAppHeading h2 { margin: 2px 0 0; color: var(--forest); font-size: 28px; }
+.adminAppHeading > span { border-radius: 999px; padding: 7px 11px; color: var(--teal); background: var(--green-bg); font-size: 13px; font-weight: 800; }
+.adminAppKicker { margin: 0; color: var(--muted); font-size: 12px; font-weight: 800; letter-spacing: .08em; }
+.adminState { padding: 24px 16px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); text-align: center; }
+.adminStateError { display: grid; gap: 14px; color: var(--red); border-color: #e39990; background: var(--red-bg); }
+.adminStateError button { justify-self: center; min-height: 42px; border: 1px solid var(--red); border-radius: 9px; padding: 0 14px; color: var(--red); background: white; font-weight: 800; cursor: pointer; }
+.adminSettings { display: grid; gap: 16px; }
+.adminField { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+.adminField > span:first-child { display: grid; gap: 4px; }
+.adminField small { color: var(--muted); font-size: 12px; }
+.adminNumber { display: flex; align-items: center; gap: 8px; color: var(--forest); }
+.adminNumber input, .subjectWeightList input { width: 94px; min-height: 48px; border: 1px solid var(--line); border-radius: 9px; padding: 0 10px; color: var(--forest-dark); background: white; font-size: 21px; font-weight: 800; text-align: right; }
+.adminToggle { display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; border: 1px solid var(--teal); border-radius: 10px; }
+.adminToggle button { min-width: 76px; min-height: 46px; border: 0; color: var(--teal); background: white; font-weight: 800; cursor: pointer; }
+.adminToggle button + button { border-left: 1px solid var(--teal); }
+.adminToggle button.active { color: white; background: var(--teal); }
+.subjectWeights { min-width: 0; margin: 2px 0 0; border: 0; padding: 0; }
+.subjectWeights legend { padding: 0; color: var(--forest); font-size: 18px; font-weight: 900; }
+.subjectWeights > p { margin: 7px 0 14px; color: var(--muted); font-size: 13px; }
+.subjectWeightList { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.subjectWeightList label { display: grid; gap: 7px; color: var(--muted); font-size: 13px; font-weight: 800; }
+.subjectWeightList input { width: 100%; text-align: center; }
+.adminValidation, .adminSuccess { margin: 0; border-radius: 9px; padding: 12px 14px; font-size: 14px; font-weight: 800; }
+.adminValidation { color: var(--red); background: var(--red-bg); }
+.adminSuccess { color: var(--forest); background: var(--green-bg); }
+.adminSave { margin-top: 4px; }
 .empty { padding: 30px 16px; border: 1px dashed var(--line); border-radius: 12px; color: var(--muted); text-align: center; }
 .srOnly { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 @media (max-width: 760px) {
@@ -132,5 +164,9 @@ a { color: inherit; }
   .dialog { padding: 24px 18px; } .dialogActions { grid-template-columns: 1fr; }
   .dialogActions .secondary { order: 1; } .dialogActions .primary { order: 2; }
   .toolbar { align-items: stretch; flex-direction: column; } .settingRow { grid-template-columns: 1fr; gap: 6px; }
+  .adminAppCard { border-radius: 18px; padding: 22px 16px; } .adminAppHeading { margin-bottom: 18px; }
+  .adminField { align-items: stretch; flex-direction: column; gap: 12px; }
+  .adminNumber input { flex: 1; } .adminToggle { width: 100%; }
+  .subjectWeightList { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
